@@ -193,12 +193,14 @@ def main():
         criterion = CrossEntropy(ignore_label=config.TRAIN.IGNORE_LABEL,
                                  weight=train_dataset.class_weights)
 
-    model = FullModel(model, criterion)
-    model = nn.SyncBatchNorm.convert_sync_batchnorm(model)
-    model = model.to(device)
-    model = nn.parallel.DistributedDataParallel(
-        model, device_ids=[args.local_rank], output_device=args.local_rank)
+    #model = FullModel(model, criterion)
+    #model = nn.SyncBatchNorm.convert_sync_batchnorm(model)
+    #model = model.to(device)
+    #model = nn.parallel.DistributedDataParallel(
+    #    model, device_ids=[args.local_rank], output_device=args.local_rank)
 
+    model = FullModel(model, criterion)
+    model = nn.DataParallel(model, device_ids=gpus).cuda()
     # optimizer
     if config.TRAIN.OPTIMIZER == 'sgd':
         optimizer = torch.optim.SGD([{'params':
