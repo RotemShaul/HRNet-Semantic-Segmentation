@@ -481,10 +481,13 @@ def get_seg_model(cfg, **kwargs):
     model = HighResolutionNet(cfg, **kwargs)
     model.init_weights(cfg.MODEL.PRETRAINED)
 
+    print("After init weights and before change")
     weight = model.conv1.weight.clone()
     model.conv1 = nn.Conv2d(4, 64, kernel_size=3, stride=2, padding=1, bias=False)
     with torch.no_grad():
         model.conv1.weight[:, :3] = weight
         model.conv1.weight[:, 3] = model.conv1.weight[:, 0] #Add smarter initialization to first layer
+
+    print("Changed model first layer")
 
     return model
