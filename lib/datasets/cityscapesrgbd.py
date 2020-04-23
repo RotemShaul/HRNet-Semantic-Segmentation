@@ -83,7 +83,7 @@ class CityscapesRGBD(BaseDataset):
                 name = os.path.splitext(os.path.basename(label_path))[0]
                 #################### Adding disparity file name to input
                 disparity_path = image_path.replace('leftImg8bit/', 'kitti_disparity/', 1) ##Assumes this heirarchy
-                print("Calculated image path and disp path {} {}".format(image_path, disparity_path))
+                #print("Calculated image path and disp path {} {}".format(image_path, disparity_path))
                 files.append({
                     "img": image_path,
                     "label": label_path,
@@ -130,13 +130,13 @@ class CityscapesRGBD(BaseDataset):
         #disparity = np.asarray(disparity, np.uint16)
         disparity = disparity / 256.0
 
-        print("Read disparity image, dim {}".format(disparity.size()))
+        print("Read disparity image, dim {}".format(disparity.size))
 
         _, disparity = self.gen_sample(image.copy(), disparity,
                                 self.multi_scale, self.flip,
                                 self.center_crop_test)
 
-        print("Read disparity sample, dim {}".format(disparity.size()))
+        print("Read disparity sample, dim {}".format(disparity.size))
 
         ############
 
