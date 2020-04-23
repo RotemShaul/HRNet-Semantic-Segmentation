@@ -82,7 +82,7 @@ class CityscapesRGBD(BaseDataset):
                 image_path, label_path = item
                 name = os.path.splitext(os.path.basename(label_path))[0]
                 #################### Adding disparity file name to input
-                disparity_path = image_path.replace('leftImg8bit/', 'kitti_disparity', 1) ##Assumes this heirarchy
+                disparity_path = image_path.replace('leftImg8bit/', 'kitti_disparity/', 1) ##Assumes this heirarchy
                 print("Calculated image path and disp path {} {}".format(image_path, disparity_path))
                 files.append({
                     "img": image_path,
