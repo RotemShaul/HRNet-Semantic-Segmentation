@@ -50,11 +50,13 @@ def train(config, epoch, num_epoch, epoch_iters, base_lr, num_iters,
     world_size = get_world_size()
 
     for i_iter, batch in enumerate(trainloader):
-        images, labels, _, _ = batch
+        images, labels, _, _, disparity = batch   ##Added disparity
         images = images.to(device)
         labels = labels.long().to(device)
 
-        losses, _ = model(images, labels)
+        disparity = disparity.to(device)
+
+        losses, _ = model(images, labels, disparity)
         loss = losses.mean()
 
         reduced_loss = reduce_tensor(loss)
