@@ -84,7 +84,9 @@ def main():
         dump_input = torch.rand(
             (1, 3, config.TRAIN.IMAGE_SIZE[1], config.TRAIN.IMAGE_SIZE[0])
             )
-        logger.info(get_model_summary(model.to(device), dump_input.to(device)))
+
+        dummy_disp = torch.rand((1, 1, config.TRAIN.IMAGE_SIZE[1], config.TRAIN.IMAGE_SIZE[0]))
+        logger.info(get_model_summary(model.to(device), dump_input.to(device), dummy_disp.to(device)))
 
         # copy model file
         this_dir = os.path.dirname(__file__)
