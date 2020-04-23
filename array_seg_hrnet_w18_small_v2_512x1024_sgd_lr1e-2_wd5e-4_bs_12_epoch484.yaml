@@ -3,19 +3,19 @@ CUDNN:
   DETERMINISTIC: false
   ENABLED: true
 GPUS: (0,1,2,3)
-OUTPUT_DIR: '/home/labs/waic/rotems/code/HRNet-Semantic-Segmentation/array_out_v2_small'
+OUTPUT_DIR: '/home/labs/waic/rotems/code/HRNet-RGBD/array_out_v2_small'
 LOG_DIR: 'log'
 WORKERS: 4
 PRINT_FREQ: 100
 
 DATASET:
-  DATASET: cityscapes
+  DATASET: cityscapesrgbd
   ROOT: '/home/labs/waic/rotems/code/HRNet-Semantic-Segmentation/data/'
   TEST_SET: 'list/cityscapes/val.lst'
   TRAIN_SET: 'list/cityscapes/train.lst'
   NUM_CLASSES: 19
 MODEL:
-  NAME: seg_hrnet
+  NAME: seg_hrnet_rgbd
   PRETRAINED: '/home/labs/waic/rotems/code/HRNet-Semantic-Segmentation/pretrained_models/hrnet_w18_small_model_v2.pth'
   EXTRA:
     FINAL_CONV_KERNEL: 1
