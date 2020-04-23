@@ -2,8 +2,8 @@ CUDNN:
   BENCHMARK: true
   DETERMINISTIC: false
   ENABLED: true
-GPUS: (0,1)
-OUTPUT_DIR: '/home/labs/waic/rotems/code/HRNet-Semantic-Segmentation/output_test_v1'
+GPUS: (0,1,2,3)
+OUTPUT_DIR: '/home/labs/waic/rotems/code/HRNet-Semantic-Segmentation/out_v2_small'
 LOG_DIR: 'log'
 WORKERS: 4
 PRINT_FREQ: 100
@@ -16,7 +16,7 @@ DATASET:
   NUM_CLASSES: 19
 MODEL:
   NAME: seg_hrnet
-  PRETRAINED: '/home/labs/waic/rotems/code/HRNet-Semantic-Segmentation/pretrained_models/hrnet_w18_small_model_v1.pth'
+  PRETRAINED: '/home/labs/waic/rotems/code/HRNet-Semantic-Segmentation/pretrained_models/hrnet_w18_small_model_v2.pth'
   EXTRA:
     FINAL_CONV_KERNEL: 1
     STAGE1:
@@ -24,9 +24,9 @@ MODEL:
       NUM_RANCHES: 1
       BLOCK: BOTTLENECK
       NUM_BLOCKS:
-      - 1
+      - 2
       NUM_CHANNELS:
-      - 32
+      - 64
       FUSE_METHOD: SUM
     STAGE2:
       NUM_MODULES: 1
@@ -36,11 +36,11 @@ MODEL:
       - 2
       - 2
       NUM_CHANNELS:
-      - 16
-      - 32
+      - 18
+      - 36
       FUSE_METHOD: SUM
     STAGE3:
-      NUM_MODULES: 1
+      NUM_MODULES: 3
       NUM_BRANCHES: 3
       BLOCK: BASIC
       NUM_BLOCKS:
@@ -48,12 +48,12 @@ MODEL:
       - 2
       - 2
       NUM_CHANNELS:
-      - 16
-      - 32
-      - 64
+      - 18
+      - 36
+      - 72
       FUSE_METHOD: SUM
     STAGE4:
-      NUM_MODULES: 1
+      NUM_MODULES: 2
       NUM_BRANCHES: 4
       BLOCK: BASIC
       NUM_BLOCKS:
@@ -62,10 +62,10 @@ MODEL:
       - 2
       - 2
       NUM_CHANNELS:
-      - 16
-      - 32
-      - 64
-      - 128
+      - 18
+      - 36
+      - 72
+      - 144
       FUSE_METHOD: SUM
 LOSS:
   USE_OHEM: false
@@ -86,8 +86,8 @@ TRAIN:
   WD: 0.0005
   MOMENTUM: 0.9
   NESTEROV: false
-  FLIP: true
-  MULTI_SCALE: true
+  FLIP: false
+  MULTI_SCALE: false
   DOWNSAMPLERATE: 1
   IGNORE_LABEL: 255
   SCALE_FACTOR: 16
