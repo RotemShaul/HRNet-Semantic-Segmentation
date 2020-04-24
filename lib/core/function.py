@@ -99,12 +99,14 @@ def validate(config, testloader, model, writer_dict, device):
 
     with torch.no_grad():
         for _, batch in enumerate(testloader):
-            image, label, _, _ = batch
+            image, label, _, _, disparity = batch
             size = label.size()
             image = image.to(device)
             label = label.long().to(device)
 
-            losses, pred = model(image, label)
+            disparity = disparity.to(device)
+
+            losses, pred = model(image, label, disparity)
             pred = F.upsample(input=pred, size=(
                         size[-2], size[-1]), mode='bilinear')
             loss = losses.mean()
