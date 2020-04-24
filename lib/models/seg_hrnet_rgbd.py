@@ -409,9 +409,11 @@ class HighResolutionNet(nn.Module):
         return nn.Sequential(*modules), num_inchannels
 
     def forward(self, x, disparity):
-        print("In forward, x, disp dims {} {}".format(x.size(), disparity.size()))
+        disparity = disparity.unsqueeze(1)
+        #print("In forward, x, disp dims {} {}".format(x.size(), disparity.size()))
+        #print("dtypes of tensors {} {}".format(x.type(), disparity.type()))
         x = torch.cat((x, disparity), 1)
-        print("In forward, after cat, x dim {}".format(x.size()))
+        #print("In forward, after cat, x dim {}".format(x.size()))
 
         x = self.conv1(x)
         x = self.bn1(x)

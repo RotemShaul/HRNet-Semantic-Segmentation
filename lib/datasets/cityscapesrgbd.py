@@ -120,6 +120,7 @@ class CityscapesRGBD(BaseDataset):
                            cv2.IMREAD_GRAYSCALE)
         label = self.convert_label(label)
 
+        image_copy = image.copy()
         image, label = self.gen_sample(image, label, 
                                 self.multi_scale, self.flip, 
                                 self.center_crop_test)
@@ -127,16 +128,20 @@ class CityscapesRGBD(BaseDataset):
         ##### Reading disparity ##TODO figure how to read properly before converting to numpy
         disparity = cv2.imread(os.path.join(self.root,'cityscapes',item["disparity"]),
                            cv2.IMREAD_GRAYSCALE)
-        #disparity = np.asarray(disparity, np.uint16)
-        disparity = disparity / 256.0
+        
+        #print("disp dtype before {}".format(disparity.dtype))
 
-        print("Read disparity image, dim {}".format(disparity.shape))
+        #print("Read disparity image, dim {} {} {}".format(disparity.shape, image.shape, label.shape))
 
-        _, disparity = self.gen_sample(image.copy(), disparity,
+        #disparity = Image.open(os.path.join(self.root,'cityscapes',item["disparity"]))
+        #print("disp dtype before {}".format(disparity.dtype))
+
+        _, disparity = self.gen_sample(image_copy, disparity,
                                 self.multi_scale, self.flip,
-                                self.center_crop_test)
+                                self.center_crop_test, disparity_transform=True)
+        #print("disp dtype after {}".format(disparity.dtype))
 
-        print("Read disparity sample, dim {}".format(disparity.shape))
+        #print("Read disparity sample after , dim {} {} {}".format(disparity.shape,image.shape, label.shape))
 
         ############
 
