@@ -130,13 +130,13 @@ class CityscapesRGBD(BaseDataset):
         #disparity = np.asarray(disparity, np.uint16)
         disparity = disparity / 256.0
 
-        print("Read disparity image, dim {}".format(disparity.size))
+        print("Read disparity image, dim {}".format(disparity.shape))
 
         _, disparity = self.gen_sample(image.copy(), disparity,
                                 self.multi_scale, self.flip,
                                 self.center_crop_test)
 
-        print("Read disparity sample, dim {}".format(disparity.size))
+        print("Read disparity sample, dim {}".format(disparity.shape))
 
         ############
 
