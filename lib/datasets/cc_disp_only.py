@@ -118,8 +118,8 @@ class CCDispOnly(BaseDataset):
         #disparity = Image.open(os.path.join(self.root,'cityscapes',item["disparity"]))
         #print("disp dtype before {}".format(disparity.dtype))
 
-        _, disparity = self.disparity_transform(disparity
-                                                )
+        disparity = self.disparity_transform(disparity)
+
         #print("disp dtype after {}".format(disparity.dtype))
 
         #print("Read disparity sample after , dim {} {} {}".format(disparity.shape,image.shape, label.shape))
