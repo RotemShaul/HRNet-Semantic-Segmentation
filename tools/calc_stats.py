@@ -163,7 +163,7 @@ def main():
         images = images.view(batch_samples, images.size(1), -1)
         print("1 view size {}".format(images.size()))
         var += ((images - mean.unsqueeze(1)) ** 2).sum([0, 2])
-    std = torch.sqrt(var / (len(trainloader.dataset) * 224 * 224))
+    std = torch.sqrt(var / (len(trainloader.dataset) * 1024 * 2048))
 
     print("Mean {}".format(mean))
     print("STD {}".format(std))
