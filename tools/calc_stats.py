@@ -133,7 +133,8 @@ def main():
     for i_iter, batch in enumerate(trainloader):
         disparity = batch
         disparity = disparity.to(device)
-        print("disparity {}".format())
+        print("disparity size {}".format(disparity.size))
+        print("disparity {}".format(disparity))
 
 
 
