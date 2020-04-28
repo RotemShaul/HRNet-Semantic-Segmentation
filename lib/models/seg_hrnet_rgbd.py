@@ -413,7 +413,6 @@ class HighResolutionNet(nn.Module):
 
     def forward(self, x, disparity):
         if self.add_noise and random.random() < 0.5:
-            print("##### Adding noise")
             noise = torch.randn(x.size()) * 1.0 + 0.0
             noise = noise.cuda()
             x = x + noise
