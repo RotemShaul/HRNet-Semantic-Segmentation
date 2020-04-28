@@ -131,19 +131,23 @@ def main():
         sampler=train_sampler)
 
 
-    for i_iter, batch in enumerate(trainloader):
-        disparity = batch
-        disparity = disparity.to(device)
-        print("disparity size in main{}".format(disparity.size()))
-        #print("disparity {}".format(disparity))
+   # for i_iter, batch in enumerate(trainloader):
+   #     disparity = batch
+   #     disparity = disparity.to(device)
+   #     print("disparity size in main{}".format(disparity.size()))
+   #     #print("disparity {}".format(disparity))
 
 
     mean = 0.0
     for i_iter, batch in enumerate(trainloader):
         images = batch
         images = images.to(device)
+        print("disparity size in main{}".format(images.size()))
         batch_samples = images.size(0)
+        print("sample size 0 and 1 {} {}".format(images.size(0), images.size(1)))
         images = images.view(batch_samples, images.size(1), -1)
+        print("view size {}".format(images.size()))
+
         mean += images.mean(2).sum(0)
     mean = mean / len(trainloader.dataset)
 
@@ -151,8 +155,11 @@ def main():
     for i_iter, batch in enumerate(trainloader):
         images = batch
         images = images.to(device)
+        print("disparity size in main{}".format(images.size()))
         batch_samples = images.size(0)
+        print("sample size 0 and 1 {} {}".format(images.size(0), images.size(1)))
         images = images.view(batch_samples, images.size(1), -1)
+        print("view size {}".format(images.size()))
         var += ((images - mean.unsqueeze(1)) ** 2).sum([0, 2])
     std = torch.sqrt(var / (len(trainloader.dataset) * 224 * 224))
 
