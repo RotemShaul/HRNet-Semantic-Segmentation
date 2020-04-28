@@ -48,8 +48,10 @@ class BaseDataset(data.Dataset):
     def label_transform(self, label):
         return np.array(label).astype('int32')
     
-    def disparity_transform(self, disparity):
+    def disparity_transform(self, disparity, mean, std):
          disparity = disparity.astype(np.float32)
+         disparity -= mean
+         disparity /= std
          #disparity = disparity / 256.0
          return disparity
 

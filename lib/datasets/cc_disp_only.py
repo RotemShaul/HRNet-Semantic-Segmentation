@@ -30,7 +30,9 @@ class CCDispOnly(BaseDataset):
                  downsample_rate=1,
                  scale_factor=16,
                  mean=[0.485, 0.456, 0.406], 
-                 std=[0.229, 0.224, 0.225]):
+                 std=[0.229, 0.224, 0.225],
+                 mean_disp=41.42,
+                 std_disp=31.03):
 
         super(CCDispOnly, self).__init__(ignore_label, base_size,
                 crop_size, downsample_rate, scale_factor, mean, std,)
@@ -121,8 +123,7 @@ class CCDispOnly(BaseDataset):
         #print("disparity size after reading {}".format(disparity.shape))
         #print("disparity  after reading {}".format(disparity))
 
-
-        disparity = self.disparity_transform(disparity)
+        disparity = self.disparity_transform(disparity, self.mean_disp, self.std_disp)
 
         #print("disparity size after transform{}".format(disparity.shape))
         #print("disparity after transform{}".format(disparity))
