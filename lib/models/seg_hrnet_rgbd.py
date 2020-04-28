@@ -18,6 +18,7 @@ import torch
 import torch.nn as nn
 import torch._utils
 import torch.nn.functional as F
+import random
 
 BatchNorm2d = nn.BatchNorm2d
 BN_MOMENTUM = 0.01
@@ -261,6 +262,8 @@ class HighResolutionNet(nn.Module):
         extra = config.MODEL.EXTRA
         super(HighResolutionNet, self).__init__()
 
+        self.add_noise = config.DATASET.ADD_NOISE
+        print("######### add noise is {}".format(self.add_noise))
         # stem net
         self.conv1 = nn.Conv2d(3, 64, kernel_size=3, stride=2, padding=1,
                                bias=False)
@@ -409,6 +412,11 @@ class HighResolutionNet(nn.Module):
         return nn.Sequential(*modules), num_inchannels
 
     def forward(self, x, disparity):
+        if self.add_noise and random.random() < 0.5:
+            print("##### Adding noise")
+            noise = torch.randn(x.size()) * 1.0 + 0.0
+            x = x + noise
+
         disparity = disparity.unsqueeze(1)
         #print("In forward, x, disp dims {} {}".format(x.size(), disparity.size()))
         #print("dtypes of tensors {} {}".format(x.type(), disparity.type()))
