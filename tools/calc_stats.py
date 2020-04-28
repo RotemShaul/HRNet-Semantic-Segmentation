@@ -130,12 +130,34 @@ def main():
         drop_last=True,
         sampler=train_sampler)
 
+
     for i_iter, batch in enumerate(trainloader):
         disparity = batch
         disparity = disparity.to(device)
         print("disparity size in main{}".format(disparity.size()))
         #print("disparity {}".format(disparity))
 
+
+    mean = 0.0
+    for i_iter, batch in enumerate(trainloader):
+        images = batch
+        images = images.to(device)
+        batch_samples = images.size(0)
+        images = images.view(batch_samples, images.size(1), -1)
+        mean += images.mean(2).sum(0)
+    mean = mean / len(trainloader.dataset)
+
+    var = 0.0
+    for i_iter, batch in enumerate(trainloader):
+        images = batch
+        images = images.to(device)
+        batch_samples = images.size(0)
+        images = images.view(batch_samples, images.size(1), -1)
+        var += ((images - mean.unsqueeze(1)) ** 2).sum([0, 2])
+    std = torch.sqrt(var / (len(trainloader.dataset) * 224 * 224))
+
+    print("Mean {}".format(mean))
+    print("STD {}".format(std))
 
 
 if __name__ == '__main__':

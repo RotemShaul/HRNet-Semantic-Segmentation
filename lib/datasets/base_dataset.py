@@ -50,7 +50,7 @@ class BaseDataset(data.Dataset):
     
     def disparity_transform(self, disparity):
          disparity = disparity.astype(np.float32)
-         disparity = disparity / 256.0
+         #disparity = disparity / 256.0
          return disparity
 
     def pad_image(self, image, h, w, size, padvalue):
