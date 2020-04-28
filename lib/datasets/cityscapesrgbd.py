@@ -30,10 +30,15 @@ class CityscapesRGBD(BaseDataset):
                  downsample_rate=1,
                  scale_factor=16,
                  mean=[0.485, 0.456, 0.406], 
-                 std=[0.229, 0.224, 0.225]):
+                 std=[0.229, 0.224, 0.225],
+                 mean_disp=41.42,
+                 std_disp=31.03):
 
         super(CityscapesRGBD, self).__init__(ignore_label, base_size,
                 crop_size, downsample_rate, scale_factor, mean, std,)
+
+        self.mean_disp = mean_disp
+        self.std_disp = std_disp
 
         self.root = root
         self.list_path = list_path
@@ -138,7 +143,7 @@ class CityscapesRGBD(BaseDataset):
 
         _, disparity = self.gen_sample(image_copy, disparity,
                                 self.multi_scale, self.flip,
-                                self.center_crop_test, disparity_transform=True)
+                                self.center_crop_test, disparity_transform=True, mean_disp=self.mean_disp, std_disp=self.std_disp)
         #print("disp dtype after {}".format(disparity.dtype))
 
         #print("Read disparity sample after , dim {} {} {}".format(disparity.shape,image.shape, label.shape))

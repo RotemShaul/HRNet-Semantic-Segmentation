@@ -122,7 +122,8 @@ class BaseDataset(data.Dataset):
             return image
 
     def gen_sample(self, image, label, 
-            multi_scale=True, is_flip=True, center_crop_test=False, disparity_transform=False):
+            multi_scale=True, is_flip=True, center_crop_test=False, disparity_transform=False,
+                   mean_disp=0.0, std_disp=0.0):
         if multi_scale:
             rand_scale = 0.5 + random.randint(0, self.scale_factor) / 10.0
             image, label = self.multi_scale_aug(image, label, 
@@ -137,7 +138,7 @@ class BaseDataset(data.Dataset):
         image = self.input_transform(image)
         
         if disparity_transform:
-           label = self.disparity_transform(label)
+           label = self.disparity_transform(label, mean_disp, std_disp)
         else:
            label = self.label_transform(label)
         
