@@ -37,6 +37,9 @@ class CCDispOnly(BaseDataset):
         super(CCDispOnly, self).__init__(ignore_label, base_size,
                 crop_size, downsample_rate, scale_factor, mean, std,)
 
+        self.mean_disp = mean_disp
+        self.std_disp = std_disp
+
         self.root = root
         self.list_path = list_path
         self.num_classes = num_classes
