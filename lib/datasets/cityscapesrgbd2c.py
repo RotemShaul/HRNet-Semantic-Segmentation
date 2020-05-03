@@ -20,7 +20,7 @@ class CityscapesRGBD2c(BaseDataset):
                  root, 
                  list_path, 
                  num_samples=None, 
-                 num_classes=19,
+                 num_classes=2,
                  multi_scale=True, 
                  flip=True, 
                  ignore_label=-1, 
@@ -43,11 +43,7 @@ class CityscapesRGBD2c(BaseDataset):
         self.root = root
         self.list_path = list_path
         self.num_classes = num_classes
-        self.class_weights = torch.FloatTensor([0.8373, 0.918, 0.866, 1.0345, 
-                                        1.0166, 0.9969, 0.9754, 1.0489,
-                                        0.8786, 1.0023, 0.9539, 0.9843, 
-                                        1.1116, 0.9037, 1.0865, 1.0955, 
-                                        1.0865, 1.1529, 1.0507]).cuda()
+        self.class_weights = torch.FloatTensor([18.0032, 0.9969]).cuda()
 
         self.multi_scale = multi_scale
         self.flip = flip
@@ -63,15 +59,14 @@ class CityscapesRGBD2c(BaseDataset):
                               1: ignore_label, 2: ignore_label, 
                               3: ignore_label, 4: ignore_label, 
                               5: ignore_label, 6: ignore_label, 
-                              7: ignore_label, 8: ignore_label, 9: ignore_label,
-                              10: ignore_label, 11: ignore_label, 12: ignore_label,
-                              13: ignore_label, 14: ignore_label, 15: ignore_label,
-                              16: ignore_label, 17: 0, 18: ignore_label,
-                              19: ignore_label, 20: ignore_label, 21: ignore_label, 22: ignore_label, 23: ignore_label,
-                              24: ignore_label,
-                              25: ignore_label, 26: ignore_label, 27: ignore_label, 28: ignore_label,
-                              29: ignore_label, 30: ignore_label, 
-                              31: ignore_label, 32: ignore_label, 33: ignore_label}
+                              7: 0, 8: 0, 9: ignore_label,
+                              10: ignore_label, 11: 0, 12: 0,
+                              13: 0, 14: ignore_label, 15: ignore_label,
+                              16: ignore_label, 17: 1, 18: ignore_label,
+                              19: 0, 20: 0, 21: 0, 22: 0, 23: 0, 24: 0,
+                              25: 0, 26: 0, 27: 0, 28: 0,
+                              29: ignore_label, 30: ignore_label,
+                              31: 0, 32: 0, 33: 0}
     
     def read_files(self):
         files = []
