@@ -495,9 +495,12 @@ def get_seg_model(cfg, **kwargs):
     weight = model.conv1.weight.clone()
     model.conv1 = nn.Conv2d(1, 64, kernel_size=3, stride=2, padding=1, bias=False)
     #Init in such a way for the 4th dim sake
+    print("weight size before mean {}".format(weight.size()))
     mean_weights = torch.mean(weight, dim=1)
+    print("weight size after mean {}".format(weight.size()))
     with torch.no_grad():
         model.conv1.weight = mean_weights
+        print("weight replaced with mean")
 
     print("Changed model first layer")
 
