@@ -13,4 +13,5 @@ from .lip import LIP as lip
 from .pascal_ctx import PASCALContext as pascal_ctx
 
 from .cityscapesrgbd import CityscapesRGBD as cityscapesrgbd
+from .cityscapesrgbd2c import CityscapesRGBD2c as cityscapesrgbd2c
 from .cc_disp_only import CCDispOnly as cc_disp_only
