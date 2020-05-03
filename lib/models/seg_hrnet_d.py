@@ -492,7 +492,7 @@ def get_seg_model(cfg, **kwargs):
     model.init_weights(cfg.MODEL.PRETRAINED)
 
     print("After init weights and before change, to mean to 1 weight")
-    weight = model.conv1.weight.clone()
+    weight = model.conv1.weight.data.clone()
     model.conv1 = nn.Conv2d(1, 64, kernel_size=3, stride=2, padding=1, bias=False)
     #Init in such a way for the 4th dim sake
     print("weight size before mean {}".format(weight.size()))
