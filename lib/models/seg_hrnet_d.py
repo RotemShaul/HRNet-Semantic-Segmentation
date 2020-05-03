@@ -500,7 +500,7 @@ def get_seg_model(cfg, **kwargs):
     mean_weights = mean_weights.unsqueeze(1)
     print("weight size after mean {}".format(mean_weights.size()))
     with torch.no_grad():
-        model.conv1.weight = mean_weights
+        model.conv1.weight.data = mean_weights
         print("weight replaced with mean")
 
     print("Changed model first layer")
