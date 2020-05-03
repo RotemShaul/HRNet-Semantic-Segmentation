@@ -497,6 +497,7 @@ def get_seg_model(cfg, **kwargs):
     #Init in such a way for the 4th dim sake
     print("weight size before mean {}".format(weight.size()))
     mean_weights = torch.mean(weight, dim=1)
+    mean_weights.unsqueeze(1)
     print("weight size after mean {}".format(mean_weights.size()))
     with torch.no_grad():
         model.conv1.weight = mean_weights
