@@ -52,6 +52,8 @@ _C.DATASET.TRAIN_SET = 'list/cityscapes/train.lst'
 _C.DATASET.EXTRA_TRAIN_SET = ''
 _C.DATASET.TEST_SET = 'list/cityscapes/val.lst'
 _C.DATASET.ADD_NOISE = False
+_C.DATASET.ADD_NOISE_THRESHOLD = 0.5
+_C.DATASET.ADD_NOISE_TO_DISP = False
 # training
 _C.TRAIN = CN()
 
