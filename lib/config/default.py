@@ -54,6 +54,7 @@ _C.DATASET.TEST_SET = 'list/cityscapes/val.lst'
 _C.DATASET.ADD_NOISE = False
 _C.DATASET.ADD_NOISE_THRESHOLD = 0.5
 _C.DATASET.ADD_NOISE_TO_DISP = False
+_C.DATASET.ONLY_VALIDATE = False
 # training
 _C.TRAIN = CN()
 
