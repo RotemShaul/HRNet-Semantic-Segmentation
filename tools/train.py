@@ -259,25 +259,27 @@ def main():
                     testloader, model, writer_dict, device)
 
         if args.local_rank == 0:
-            logger.info('=> saving checkpoint to {}'.format(
-                final_output_dir + 'checkpoint.pth.tar'))
-            torch.save({
-                'epoch': epoch+1,
-                'best_mIoU': best_mIoU,
-                'state_dict': model.module.state_dict(),
-                'optimizer': optimizer.state_dict(),
-            }, os.path.join(final_output_dir,'checkpoint.pth.tar'))
+            if not config.DATASET.ONLY_VALIDATE:
+                logger.info('=> saving checkpoint to {}'.format(
+                    final_output_dir + 'checkpoint.pth.tar'))
+                torch.save({
+                    'epoch': epoch+1,
+                    'best_mIoU': best_mIoU,
+                    'state_dict': model.module.state_dict(),
+                    'optimizer': optimizer.state_dict(),
+                }, os.path.join(final_output_dir,'checkpoint.pth.tar'))
 
             if mean_IoU > best_mIoU:
                 best_mIoU = mean_IoU
                 torch.save(model.module.state_dict(),
                            os.path.join(final_output_dir, 'best.pth'))
+
             msg = 'Loss: {:.3f}, MeanIU: {: 4.4f}, Best_mIoU: {: 4.4f}'.format(
                     valid_loss, mean_IoU, best_mIoU)
             logging.info(msg)
             logging.info(IoU_array)
 
-            if epoch == end_epoch - 1:
+            if epoch == end_epoch - 1 and not config.DATASET.ONLY_VALIDATE:
                 torch.save(model.module.state_dict(),
                        os.path.join(final_output_dir, 'final_state.pth'))
 
