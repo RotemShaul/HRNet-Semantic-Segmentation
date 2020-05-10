@@ -265,6 +265,7 @@ class HighResolutionNet(nn.Module):
         self.add_noise = config.DATASET.ADD_NOISE
         self.add_noise_threshold = config.DATASET.ADD_NOISE_THRESHOLD
         self.add_noise_to_disp = config.DATASET.ADD_NOISE_TO_DISP
+        self.noise_std = config.DATASET.NOISE_STD
         print("######### add noise is {}".format(self.add_noise))
         # stem net
         self.conv1 = nn.Conv2d(3, 64, kernel_size=3, stride=2, padding=1,
@@ -422,7 +423,7 @@ class HighResolutionNet(nn.Module):
                 noise = noise.cuda()
                 disparity = disparity + noise
             else:
-                noise = torch.randn(x.size()) * 1.0 + 0.0
+                noise = torch.randn(x.size()) * self.noise_std + 0.0
                 noise = noise.cuda()
                 x = x + noise
 
