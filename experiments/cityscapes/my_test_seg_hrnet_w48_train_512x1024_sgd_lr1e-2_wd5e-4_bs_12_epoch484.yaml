@@ -3,7 +3,7 @@ CUDNN:
   DETERMINISTIC: false
   ENABLED: true
 GPUS: (0,1,2,3)
-OUTPUT_DIR: '/home/labs/waic/rotems/code/HRNet-Semantic-Segmentatio/right_infer_output'
+OUTPUT_DIR: '/home/labs/waic/rotems/code/HRNet-Semantic-Segmentation/right_infer_output'
 LOG_DIR: 'log'
 WORKERS: 4
 PRINT_FREQ: 100
