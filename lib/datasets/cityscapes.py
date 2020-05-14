@@ -196,7 +196,8 @@ class Cityscapes(BaseDataset):
         preds = np.asarray(np.argmax(preds, axis=1), dtype=np.uint8)
         for i in range(preds.shape[0]):
             #Save label
-            curr_pred_label = preds[i]
+            curr_pred_label = self.convert_label(preds[i], inverse=True)
+            #curr_pred_label = preds[i]
             pred_label_image = Image.fromarray(curr_pred_label)
             pred_label_image.save(os.path.join(sv_path, name[i] + '_label.png'))
             ##
