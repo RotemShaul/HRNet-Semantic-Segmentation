@@ -68,10 +68,12 @@ class MidAir2c(BaseDataset):
         else:
             for item in self.img_list:
                 image_path = item
-                name = image_path
-                image_path = 'color_left/trajectory_5000/' + image_path[0: len(image_path) - 1]
-                label_path = 'segmentation/trajectory_5000/' + image_path[0: len(image_path) - 5] + 'PNG'
-                disparity_path = 'stereo_disparity/trajectory_5000/' + image_path[0: len(image_path) - 5] + 'PNG'
+                name = image_path[0]
+                #print("Image path {}".format(name))
+                
+                image_path = 'color_left/trajectory_5000/' + name[0: len(name)]
+                label_path = 'segmentation/trajectory_5000/' + name[0: len(name) - 4] + 'PNG'
+                disparity_path = 'stereo_disparity/trajectory_5000/' + name[0: len(name) - 4] + 'PNG'
                 #print("Calculated image path and disp path {} {}".format(image_path, disparity_path))
                 files.append({
                     "img": image_path,
@@ -97,11 +99,11 @@ class MidAir2c(BaseDataset):
         seg_label = Image.open(os.path.join(self.root,'midair',label_path))
         disp_img = Image.open(os.path.join(self.root,'midair',disparity_path))
 
-        size = rgb_image.shape
 
         rgb_image = np.asarray(rgb_image, np.float32)
         seg_label = np.asarray(seg_label, np.int64)
 
+        size = rgb_image.shape
         # seg_label[seg_label == 0] = 14 #Give the background class label
         seg_label[seg_label == 2] = -1  # Tree
         seg_label[seg_label >= 0] = 0
