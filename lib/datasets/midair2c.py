@@ -93,9 +93,9 @@ class MidAir2c(BaseDataset):
         label_path = item["label"]
         disparity_path = item["disparity"]
 
-        rgb_image = Image.open(image_path)
-        seg_label = Image.open(label_path)
-        disp_img = Image.open(disparity_path)
+        rgb_image = Image.open(os.path.join(self.root,'midair',image_path))
+        seg_label = Image.open(os.path.join(self.root,'midair',label_path))
+        disp_img = Image.open(os.path.join(self.root,'midair',disparity_path))
 
         size = rgb_image.shape
 
