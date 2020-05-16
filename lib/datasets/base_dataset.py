@@ -52,7 +52,6 @@ class BaseDataset(data.Dataset):
          disparity = disparity.astype(np.float32)
          disparity -= mean
          disparity /= std
-         #disparity = disparity / 256.0
          return disparity
 
     def pad_image(self, image, h, w, size, padvalue):

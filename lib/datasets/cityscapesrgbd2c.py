@@ -43,7 +43,7 @@ class CityscapesRGBD2c(BaseDataset):
         self.root = root
         self.list_path = list_path
         self.num_classes = num_classes
-        self.class_weights = torch.FloatTensor([18.0032, 0.9969]).cuda()
+        self.class_weights = None #torch.FloatTensor([18.0032, 0.9969]).cuda()
 
         self.multi_scale = multi_scale
         self.flip = flip
@@ -136,14 +136,25 @@ class CityscapesRGBD2c(BaseDataset):
 
         #disparity = Image.open(os.path.join(self.root,'cityscapes',item["disparity"]))
         #print("disp dtype before {}".format(disparity.dtype))
+         
 
+
+        #
+        #self.mean_disp = 0
+        #self.std_disp = 1
+        #tdisp = Image.open(os.path.join(self.root,'cityscapes',item["disparity"]))
+        #tdisp = np.asarray(tdisp, np.uint16) / 256.0
+        #print('tdisp {}'.format(tdisp))
+        #print("tdisp type {}".format(tdisp.dtype))
+        #disparity = tdisp
+        #
         _, disparity = self.gen_sample(image_copy, disparity,
                                 self.multi_scale, self.flip,
                                 self.center_crop_test, disparity_transform=True, mean_disp=self.mean_disp, std_disp=self.std_disp)
         #print("disp dtype after {}".format(disparity.dtype))
-
+        #print(disparity)
         #print("Read disparity sample after , dim {} {} {}".format(disparity.shape,image.shape, label.shape))
-
+        #exit(-1)
         ############
 
         return image.copy(), label.copy(), np.array(size), name, disparity.copy()
