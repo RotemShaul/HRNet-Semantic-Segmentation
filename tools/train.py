@@ -114,7 +114,8 @@ def main():
                         base_size=config.TRAIN.BASE_SIZE,
                         crop_size=crop_size,
                         downsample_rate=config.TRAIN.DOWNSAMPLERATE,
-                        scale_factor=config.TRAIN.SCALE_FACTOR)
+                        scale_factor=config.TRAIN.SCALE_FACTOR,
+                        normalize_disparity=config.DATASET.NORMALIZE_DISP)
 
     if distributed:
         train_sampler = DistributedSampler(train_dataset)
@@ -142,7 +143,8 @@ def main():
                     base_size=config.TRAIN.BASE_SIZE,
                     crop_size=crop_size,
                     downsample_rate=config.TRAIN.DOWNSAMPLERATE,
-                    scale_factor=config.TRAIN.SCALE_FACTOR)
+                    scale_factor=config.TRAIN.SCALE_FACTOR,
+                    normalize_disparity=config.DATASET.NORMALIZE_DISP)
 
         if distributed:
             extra_train_sampler = DistributedSampler(extra_train_dataset)
@@ -170,7 +172,8 @@ def main():
                         base_size=config.TEST.BASE_SIZE,
                         crop_size=test_size,
                         center_crop_test=config.TEST.CENTER_CROP_TEST,
-                        downsample_rate=1)
+                        downsample_rate=1,
+                        normalize_disparity=config.DATASET.NORMALIZE_DISP)
 
     if distributed:
         test_sampler = DistributedSampler(test_dataset)

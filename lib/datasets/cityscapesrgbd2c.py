@@ -32,13 +32,16 @@ class CityscapesRGBD2c(BaseDataset):
                  mean=[0.485, 0.456, 0.406], 
                  std=[0.229, 0.224, 0.225],
                  mean_disp=41.42,
-                 std_disp=31.03):
+                 std_disp=31.03,
+                 normalize_disparity=True):
 
         super(CityscapesRGBD2c, self).__init__(ignore_label, base_size,
                 crop_size, downsample_rate, scale_factor, mean, std,)
 
         self.mean_disp = mean_disp
         self.std_disp = std_disp
+        self.normalize_disparity = normalize_disparity
+
 
         self.root = root
         self.list_path = list_path
@@ -150,7 +153,8 @@ class CityscapesRGBD2c(BaseDataset):
         #
         _, disparity = self.gen_sample(image_copy, disparity,
                                 self.multi_scale, self.flip,
-                                self.center_crop_test, disparity_transform=True, mean_disp=self.mean_disp, std_disp=self.std_disp)
+                                self.center_crop_test, disparity_transform=True, mean_disp=self.mean_disp,
+                                       std_disp=self.std_disp, normalize_disparity =self.normalize_disparity)
         #print("disp dtype after {}".format(disparity.dtype))
         #print(disparity)
         #print("Read disparity sample after , dim {} {} {}".format(disparity.shape,image.shape, label.shape))

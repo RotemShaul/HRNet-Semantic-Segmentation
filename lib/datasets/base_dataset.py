@@ -48,11 +48,13 @@ class BaseDataset(data.Dataset):
     def label_transform(self, label):
         return np.array(label).astype('int32')
     
-    def disparity_transform(self, disparity, mean, std):
-         disparity = disparity.astype(np.float32)
-         disparity -= mean
-         disparity /= std
-         return disparity
+    def disparity_transform(self, disparity, mean, std, normalize_disparity):
+        disparity = disparity.astype(np.float32)
+        if normalize_disparity:
+            print("Normalizing disparity")
+            disparity -= mean
+            disparity /= std
+        return disparity
 
     def pad_image(self, image, h, w, size, padvalue):
         pad_image = image.copy()
@@ -122,7 +124,7 @@ class BaseDataset(data.Dataset):
 
     def gen_sample(self, image, label, 
             multi_scale=True, is_flip=True, center_crop_test=False, disparity_transform=False,
-                   mean_disp=0.0, std_disp=0.0):
+                   mean_disp=0.0, std_disp=1.0, normalize_disparity=True):
         if multi_scale:
             rand_scale = 0.5 + random.randint(0, self.scale_factor) / 10.0
             image, label = self.multi_scale_aug(image, label, 
@@ -137,7 +139,7 @@ class BaseDataset(data.Dataset):
         image = self.input_transform(image)
         
         if disparity_transform:
-           label = self.disparity_transform(label, mean_disp, std_disp)
+           label = self.disparity_transform(label, mean_disp, std_disp, normalize_disparity)
         else:
            label = self.label_transform(label)
         
