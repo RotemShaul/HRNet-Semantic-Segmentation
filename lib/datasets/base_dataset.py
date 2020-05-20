@@ -51,7 +51,7 @@ class BaseDataset(data.Dataset):
     def disparity_transform(self, disparity, mean, std, normalize_disparity):
         disparity = disparity.astype(np.float32)
         if normalize_disparity:
-            print("Normalizing disparity")
+            #print("Normalizing disparity")
             disparity -= mean
             disparity /= std
         return disparity
