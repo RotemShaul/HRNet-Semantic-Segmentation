@@ -65,8 +65,8 @@ class CityscapesRGBD2c(BaseDataset):
                               7: 0, 8: 0, 9: ignore_label,
                               10: ignore_label, 11: 0, 12: 0,
                               13: 0, 14: ignore_label, 15: ignore_label,
-                              16: ignore_label, 17: 1, 18: ignore_label,
-                              19: 0, 20: 0, 21: 0, 22: 0, 23: 0, 24: 0,
+                              16: ignore_label, 17: 0, 18: ignore_label,
+                              19: 0, 20: 0, 21: 0, 22: 0, 23: 0, 24: 1,
                               25: 0, 26: 0, 27: 0, 28: 0,
                               29: ignore_label, 30: ignore_label,
                               31: 0, 32: 0, 33: 0}
