@@ -414,8 +414,9 @@ class HighResolutionNet(nn.Module):
 
         return nn.Sequential(*modules), num_inchannels
 
-    def forward(self, x, disparity):
+    def forward(self, x, disparity, confidence):
         disparity = disparity.unsqueeze(1)
+        confidence = confidence.unsqueeze(1)
 
         if self.add_noise and random.random() < self.add_noise_threshold:
             if self.add_noise_to_disp:
@@ -430,6 +431,8 @@ class HighResolutionNet(nn.Module):
         #print("In forward, x, disp dims {} {}".format(x.size(), disparity.size()))
         #print("dtypes of tensors {} {}".format(x.type(), disparity.type()))
         x = torch.cat((x, disparity), 1)
+        x = torch.cat((x, confidence), 1)
+
         #print("In forward, after cat, x dim {}".format(x.size()))
 
         x = self.conv1(x)
@@ -502,12 +505,14 @@ def get_seg_model(cfg, **kwargs):
 
     print("After init weights and before change")
     weight = model.conv1.weight.clone()
-    model.conv1 = nn.Conv2d(4, 64, kernel_size=3, stride=2, padding=1, bias=False)
+    model.conv1 = nn.Conv2d(5, 64, kernel_size=3, stride=2, padding=1, bias=False)
     #Init in such a way for the 4th dim sake
     nn.init.kaiming_normal_(model.conv1.weight, mode='fan_out', nonlinearity='relu')
     with torch.no_grad():
         model.conv1.weight[:, :3] = weight
         model.conv1.weight[:, 3] = model.conv1.weight[:, 0] #Add smarter initialization to first layer
+        model.conv1.weight[:, 4] = model.conv1.weight[:, 0] #confidence
+
 
     print("Changed model first layer")
 

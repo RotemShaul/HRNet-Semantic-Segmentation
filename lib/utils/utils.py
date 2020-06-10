@@ -30,8 +30,8 @@ class FullModel(nn.Module):
     self.model = model
     self.loss = loss
 
-  def forward(self, inputs, labels, disparity):
-    outputs = self.model(inputs, disparity) ### Added disparity
+  def forward(self, inputs, labels, disparity, confidence):
+    outputs = self.model(inputs, disparity, confidence) ### Added disparity
     loss = self.loss(outputs, labels)
     return torch.unsqueeze(loss,0), outputs
 

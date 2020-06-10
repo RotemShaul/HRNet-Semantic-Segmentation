@@ -50,13 +50,14 @@ def train(config, epoch, num_epoch, epoch_iters, base_lr, num_iters,
     world_size = get_world_size()
 
     for i_iter, batch in enumerate(trainloader):
-        images, labels, _, _, disparity = batch   ##Added disparity
+        images, labels, _, _, disparity, confidence = batch   ##Added disparity
         images = images.to(device)
         labels = labels.long().to(device)
 
         disparity = disparity.to(device)
+        confidence = confidence.to(device)
 
-        losses, _ = model(images, labels, disparity)
+        losses, _ = model(images, labels, disparity, confidence)
         loss = losses.mean()
 
         reduced_loss = reduce_tensor(loss)
@@ -99,14 +100,15 @@ def validate(config, testloader, model, writer_dict, device):
 
     with torch.no_grad():
         for _, batch in enumerate(testloader):
-            image, label, _, _, disparity = batch
+            image, label, _, _, disparity, confidence = batch
             size = label.size()
             image = image.to(device)
             label = label.long().to(device)
 
             disparity = disparity.to(device)
+            confidence = confidence.to(device)
 
-            losses, pred = model(image, label, disparity)
+            losses, pred = model(image, label, disparity, confidence)
             pred = F.upsample(input=pred, size=(
                         size[-2], size[-1]), mode='bilinear')
             loss = losses.mean()
