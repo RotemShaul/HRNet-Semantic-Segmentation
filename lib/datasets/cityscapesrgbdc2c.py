@@ -137,7 +137,7 @@ class CityscapesRGBDC2c(BaseDataset):
 
         confidence_full_path = os.path.join(self.root,'cityscapes',item["confidence"])
         confidence_map = Image.open(confidence_full_path) ###cv2.imread(os.path.join(self.root,'cityscapes',item["confidence"]), ###cv2.IMREAD_GRAYSCALE)
-
+        confidence_map = np.asarray(confidence_map)
         print("Confidence values {}".format(confidence_map))
 
         confidence_map = confidence_map.astype(np.float32)
