@@ -142,7 +142,8 @@ class CityscapesRGBDC(BaseDataset):
                            cv2.IMREAD_GRAYSCALE)
 
         confidence_map = confidence_map / 255.0
-        
+        confidence_map = confidence_map.astype(np.float32)
+
         #print("disp dtype before {}".format(disparity.dtype))
 
         #print("Read disparity image, dim {} {} {}".format(disparity.shape, image.shape, label.shape))
