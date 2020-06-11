@@ -136,7 +136,7 @@ class CityscapesRGBDC2c(BaseDataset):
                            cv2.IMREAD_GRAYSCALE)
 
         confidence_full_path = os.path.join(self.root,'cityscapes',item["confidence"])
-        confidence_map = Image.read(confidence_full_path) ###cv2.imread(os.path.join(self.root,'cityscapes',item["confidence"]), ###cv2.IMREAD_GRAYSCALE)
+        confidence_map = Image.open(confidence_full_path) ###cv2.imread(os.path.join(self.root,'cityscapes',item["confidence"]), ###cv2.IMREAD_GRAYSCALE)
 
         print("Confidence values {}".format(confidence_map))
 
@@ -146,7 +146,7 @@ class CityscapesRGBDC2c(BaseDataset):
         #print("disp dtype before {}".format(disparity.dtype))
         print("Read confidence, disparity image, dim {} {} {} {}".format(confidence_map.shape, disparity.shape, image.shape, label.shape))
         #print("Confidence values {}".format(confidence_map))
-        #disparity = Image.open(os.path.join(self.root,'cityscapes',item["disparity"]))
+        #disparity = Image.open(os.path.join(self.root,'cityscapes',item:Q["disparity"]))
         #print("disp dtype before {}".format(disparity.dtype))
 
         _, disparity = self.gen_sample(image_copy, disparity,
