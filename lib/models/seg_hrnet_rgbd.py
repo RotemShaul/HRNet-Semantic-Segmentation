@@ -420,7 +420,7 @@ class HighResolutionNet(nn.Module):
 
         print("##### IN MODEL Confidence, disp shape, image {} {} {}".format(confidence.shape, disparity.shape, x.shape))
 
-        print("##### IN MODEL Confidence values {}".format(confidence.numpy()[:,:,500:600,500:600]))
+        print("##### IN MODEL Confidence values {}".format(confidence.cpu().numpy()[:,:,500:600,500:600]))
 
         if self.add_noise and random.random() < self.add_noise_threshold:
             if self.add_noise_to_disp:
