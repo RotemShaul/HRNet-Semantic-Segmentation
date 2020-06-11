@@ -418,9 +418,9 @@ class HighResolutionNet(nn.Module):
         disparity = disparity.unsqueeze(1)
         confidence = confidence.unsqueeze(1)
 
-        print("##### IN MODEL Confidence, disp shape, image {} {} {}".format(confidence.shape, disparity.shape, x.shape))
+        #print("##### IN MODEL Confidence, disp shape, image {} {} {}".format(confidence.shape, disparity.shape, x.shape))
 
-        print("##### IN MODEL Confidence values {}".format(confidence.cpu().numpy()[:,:,500:600,500:600]))
+        #print("##### IN MODEL Confidence values {}".format(confidence.cpu().numpy()[:,:,500:600,500:600]))
 
         if self.add_noise and random.random() < self.add_noise_threshold:
             if self.add_noise_to_disp:
@@ -437,7 +437,7 @@ class HighResolutionNet(nn.Module):
         x = torch.cat((x, disparity), 1)
         x = torch.cat((x, confidence), 1)
 
-        print("##### IN MODEL CONCAT SHAPE {}".format(x.shape))
+        #print("##### IN MODEL CONCAT SHAPE {}".format(x.shape))
 
         #print("In forward, after cat, x dim {}".format(x.size()))
 
