@@ -16,3 +16,4 @@ from .midair2c import MidAir2c as midair2c
 from .cityscapesrgbd import CityscapesRGBD as cityscapesrgbd
 from .cityscapesrgbd2c import CityscapesRGBD2c as cityscapesrgbd2c
 from .cc_disp_only import CCDispOnly as cc_disp_only
+from .cityscapesrgbdc2c import CityscapesRGBDC2c as cityscapesrgbdc2c
