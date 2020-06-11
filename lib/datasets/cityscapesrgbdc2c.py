@@ -140,10 +140,10 @@ class CityscapesRGBDC2c(BaseDataset):
 
         confidence_map = confidence_map / 255.0
         confidence_map = confidence_map.astype(np.float32)
+
         #print("disp dtype before {}".format(disparity.dtype))
-
-        #print("Read disparity image, dim {} {} {}".format(disparity.shape, image.shape, label.shape))
-
+        print("Read confidence, disparity image, dim {} {} {} {}".format(confidence_map.shape, disparity.shape, image.shape, label.shape))
+        print("Confidence values {}".format(confidence_map))
         #disparity = Image.open(os.path.join(self.root,'cityscapes',item["disparity"]))
         #print("disp dtype before {}".format(disparity.dtype))
 
