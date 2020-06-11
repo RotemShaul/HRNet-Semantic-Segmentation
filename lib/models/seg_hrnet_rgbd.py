@@ -511,9 +511,9 @@ def get_seg_model(cfg, **kwargs):
     with torch.no_grad():
         model.conv1.weight[:, :3] = weight
         model.conv1.weight[:, 3] = model.conv1.weight[:, 0] #Add smarter initialization to first layer
-        model.conv1.weight[:, 4] = model.conv1.weight[:, 0] #confidence
+        model.conv1.weight[:, 4] = model.conv1.weight[:, 1] #confidence
 
 
-    print("Changed model first layer")
+    print("Changed model first layer, both disparity and confidence")
 
     return model
