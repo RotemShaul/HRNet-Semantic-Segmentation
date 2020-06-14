@@ -177,6 +177,24 @@ class BaseDataset(data.Dataset):
             pred = pred * 0.5
         return pred.exp()
 
+    def inference_w_disp(self, model, image, disparity, flip=False):
+        size = image.size()
+        pred = model(image, disparity)
+        pred = F.upsample(input=pred,
+                            size=(size[-2], size[-1]),
+                            mode='bilinear')
+        if flip:
+            flip_img = image.numpy()[:,:,:,::-1]
+            flip_output = model(torch.from_numpy(flip_img.copy()))
+            flip_output = F.upsample(input=flip_output,
+                            size=(size[-2], size[-1]),
+                            mode='bilinear')
+            flip_pred = flip_output.cpu().numpy().copy()
+            flip_pred = torch.from_numpy(flip_pred[:,:,:,::-1].copy()).cuda()
+            pred += flip_pred
+            pred = pred * 0.5
+        return pred.exp()
+
     def multi_scale_inference(self, model, image, scales=[1], flip=False):
         batch, _, ori_height, ori_width = image.size()
         assert batch == 1, "only supporting batchsize 1."

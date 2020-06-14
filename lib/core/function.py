@@ -147,13 +147,16 @@ def testval(config, test_dataset, testloader, model,
         (config.DATASET.NUM_CLASSES, config.DATASET.NUM_CLASSES))
     with torch.no_grad():
         for index, batch in enumerate(tqdm(testloader)):
-            image, label, _, name = batch
+            image, label, _, name, disparity = batch
             size = label.size()
-            pred = test_dataset.multi_scale_inference(
-                        model, 
-                        image, 
-                        scales=config.TEST.SCALE_LIST, 
-                        flip=config.TEST.FLIP_TEST)
+
+            pred = test_dataset.inference_w_disp(model, image, disparity)
+
+            #pred = test_dataset.multi_scale_inference(
+            #            model,
+            #            image,
+            #            scales=config.TEST.SCALE_LIST,
+            #            flip=config.TEST.FLIP_TEST)
             
             if pred.size()[-2] != size[-2] or pred.size()[-1] != size[-1]:
                 pred = F.upsample(pred, (size[-2], size[-1]), 
