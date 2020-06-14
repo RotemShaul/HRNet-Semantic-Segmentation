@@ -114,7 +114,7 @@ def main():
         pin_memory=True)
     
     start = timeit.default_timer()
-    if 'val' in config.DATASET.TEST_SET:
+    if True or 'val' in config.DATASET.TEST_SET:
         mean_IoU, IoU_array, pixel_acc, mean_acc = testval(config, 
                                                            test_dataset, 
                                                            testloader, 
