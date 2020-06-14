@@ -137,7 +137,7 @@ def validate(config, testloader, model, writer_dict, device):
     
 
 def testval(config, test_dataset, testloader, model, 
-        sv_dir='', sv_pred=False):
+        sv_dir='', sv_pred=True):
     model.eval()
     confusion_matrix = np.zeros(
         (config.DATASET.NUM_CLASSES, config.DATASET.NUM_CLASSES))
@@ -145,6 +145,7 @@ def testval(config, test_dataset, testloader, model,
         for index, batch in enumerate(tqdm(testloader)):
             image, label, _, name = batch
             size = label.size()
+            #print("Current batch image size, label size and name {} {} {}".format(image.size(), label.size(), name))
             pred = test_dataset.multi_scale_inference(
                         model, 
                         image, 
@@ -155,13 +156,20 @@ def testval(config, test_dataset, testloader, model,
                 pred = F.upsample(pred, (size[-2], size[-1]), 
                                    mode='bilinear')
 
-            confusion_matrix += get_confusion_matrix(
+            current_confusion_matrix = get_confusion_matrix(
                 label,
                 pred,
                 size,
                 config.DATASET.NUM_CLASSES,
                 config.TRAIN.IGNORE_LABEL)
+            
+            confusion_matrix += current_confusion_matrix
 
+            current_pos = current_confusion_matrix.sum(1)
+            current_res = current_confusion_matrix.sum(0)
+            current_tp = np.diag(current_confusion_matrix)
+            current_IoU_array = (current_tp / np.maximum(1.0, current_pos + current_res - current_tp))
+            print("IoU per file {} {}".format(current_IoU_array, name))
             if sv_pred:
                 sv_path = os.path.join(sv_dir,'test_val_results')
                 if not os.path.exists(sv_path):
