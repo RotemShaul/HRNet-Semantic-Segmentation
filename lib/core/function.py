@@ -169,7 +169,7 @@ def testval(config, test_dataset, testloader, model,
             current_res = current_confusion_matrix.sum(0)
             current_tp = np.diag(current_confusion_matrix)
             current_IoU_array = (current_tp / np.maximum(1.0, current_pos + current_res - current_tp))
-            print("IoU per file {} {}".format(current_IoU_array, name))
+            print("index, IoU, file {} {} {}".format(index, current_IoU_array, name))
             if sv_pred:
                 sv_path = os.path.join(sv_dir,'test_val_results')
                 if not os.path.exists(sv_path):
